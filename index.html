@@ -339,6 +339,14 @@ footer p { margin:4px 0; max-width:100ch; }
 <p>Data: MLB Stats API and Baseball Savant pitch-level Statcast, regular season games only, suspended games deduplicated. Built by the /braves-dashboard skill.</p>
 </footer>
 <script>
+(function () {
+  function postHeight() {
+    window.parent.postMessage({ bravesDashboard: true, height: document.documentElement.scrollHeight }, "*");
+  }
+  window.addEventListener("load", postHeight);
+  window.addEventListener("resize", postHeight);
+  if (window.ResizeObserver) new ResizeObserver(postHeight).observe(document.documentElement);
+})();
 const tip = document.getElementById('tip');
 document.querySelectorAll('.hit').forEach(h => {
   h.addEventListener('mouseenter', e => { tip.innerHTML = h.dataset.tip; tip.style.opacity = 1; });
